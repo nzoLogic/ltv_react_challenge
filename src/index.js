@@ -7,6 +7,7 @@ import * as serviceWorker from './serviceWorker';
 import { applyMiddleware, createStore, compose } from 'redux';
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
+import logger from 'redux-logger';
 
 import IndexReducer from './data/index-reducers';
 import RootSagas from './data/index-sagas';
@@ -20,7 +21,7 @@ const composeSetup = process.env.NODE_ENV !== 'production' && typeof window === 
 
 const store = createStore(
   IndexReducer,
-  composeSetup(applyMiddleware(sagaMiddleware)), // allows redux devtools to watch sagas
+  composeSetup(applyMiddleware(sagaMiddleware, logger)), // allows redux devtools to watch sagas
 );
 
 sagaMiddleware.run(RootSagas);
