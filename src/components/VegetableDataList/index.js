@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import useVegetable from '../../data/vegetables/useVegetable';
 
 const DataTable = styled.table`
   margin-top: 20px;
@@ -12,20 +13,8 @@ const VegetableDataList = ({
   requesting = false,
   fetchData,
 }) => {
-  let result = data.map((item, i) => (
-    <tr key={Date.now() + i}>
-      <td>{item}</td>
-    </tr>
-  ));
-
-  if (!result.length) {
-    result = (<tr><td> No data loaded</td></tr>);
-  }
-
-  if (requesting) {
-    result = (<tr><td> Loading... </td></tr>);
-  }
-
+  const { vegetables } = useVegetable();
+  
   return (
     <div className="col text-center">
       <h5>{title}</h5>
@@ -43,7 +32,11 @@ const VegetableDataList = ({
       </div>
       <DataTable className="table text-left">
         <tbody>
-          {result}
+          {vegetables.map((item, i) => (
+            <tr key={Date.now() + i}>
+              <td>{item}</td>
+            </tr>
+          ))}
         </tbody>
       </DataTable>
     </div>

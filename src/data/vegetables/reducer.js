@@ -15,4 +15,4 @@ const vegetableReducer = (state = initialState, action) => {
   }
 }
 
-export default vegetableReducer;
+export default vegetableReducer
