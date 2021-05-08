@@ -6,7 +6,7 @@ export const apiRequest = (body, method, url, entity) => ({
   type: `${ entity } ${ API_REQUEST }`,
   payload: {
     data: body,
-    metha: {method, url, entity}
+    meta: {method, url, entity}
   }
 })
 
