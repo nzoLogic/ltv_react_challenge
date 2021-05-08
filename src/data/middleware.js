@@ -1,5 +1,5 @@
-import { apiError, apiRequest, apiSuccess, API_REQUEST } from "../api/actions";
-import { FETCH_VEGETABLES } from "./vegetables/actions";
+import { apiError, apiRequest, apiSuccess, API_REQUEST, API_SUCCESS } from "../api/actions";
+import { FETCH_VEGETABLES, VEGETABLES, setVegetables } from "./vegetables/actions";
 
 /**
  * 
@@ -26,6 +26,10 @@ export const vegetableMiddleware = ({ dispatch }) => next => action =>
    */
   if (action.type === FETCH_VEGETABLES) {
     dispatch(apiRequest(null, 'GET', '/api/v1/categories.json?category=vegetables', '[Vegetables]:'))
+  }
+  
+  if (action.type === `${ VEGETABLES } ${ API_SUCCESS }`) {
+    dispatch(setVegetables(action.payload.data.vegetables))
   }
 }
 

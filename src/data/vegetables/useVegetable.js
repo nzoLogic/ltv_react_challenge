@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchVegetables } from './actions';
 
 const useVegetable = () => {
-  const vegetables = useSelector(({ vegetable }) => vegetable.vegetables);
+  const { vegetables, isFetching } = useSelector(({ vegetable }) => vegetable);
   const dispatch = useDispatch();
 
   const fetchVegetablesData = useCallback(
@@ -12,6 +12,7 @@ const useVegetable = () => {
   )
   return {
     vegetables,
+    isFetching,
     fetchVegetablesData
   }
 }

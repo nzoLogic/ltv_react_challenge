@@ -7,22 +7,30 @@ const DataTable = styled.table`
   margin-bottom: 40px;
 `;
 
-const VegetableDataList = ({
-  title,
-  data = [],
-  requesting = false,
-}) => {
-  const { vegetables, fetchVegetablesData } = useVegetable();
-  
+const TableRow = (props) => (
+  <tr>
+    <td>{props.children}</td>
+  </tr>
+)
+
+const VegetableDataList = () => {
+  const {
+    vegetables,
+    isFetching,
+    fetchVegetablesData
+  } = useVegetable();
+
+  const noVeggies = vegetables.length === 0;
+
   return (
     <div className="col text-center">
-      <h5>{title}</h5>
+      <h5>2 - Vegetables</h5>
       <div className="row">
         <div className="col">
           <button
             type="button"
             className="btn btn-info"
-            disabled={requesting}
+            disabled={isFetching}
             onClick={fetchVegetablesData}
           >
             Fetch Data
@@ -31,14 +39,41 @@ const VegetableDataList = ({
       </div>
       <DataTable className="table text-left">
         <tbody>
-          {vegetables.map((item, i) => (
-            <tr key={Date.now() + i}>
-              <td>{item}</td>
-            </tr>
-          ))}
+          {
+            showIf(!isFetching && noVeggies)(
+              () => <tr><td>No data loaded</td></tr>
+            )
+          }
+          {
+            showIf(isFetching)(
+              () => <TableRow>Loading...</TableRow>
+            )
+          }
+          {
+            showIf(vegetables.length && !isFetching)(
+              () => vegetables.map((item, i) => (
+                <tr key={Date.now() + i}>
+                  <td>{item}</td>
+                </tr>
+              ))
+            )
+          }
         </tbody>
       </DataTable>
     </div>
   );
 };
+
 export default VegetableDataList;
+
+/**
+ * helper method for rendering :)
+ */
+function showIf(condition) {
+  return function (fn) {
+    if (condition) {
+      return fn()
+    }
+    return null;
+  }
+}

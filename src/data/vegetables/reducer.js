@@ -11,6 +11,14 @@ const vegetableReducer = (state = initialState, action) => {
         isFetching: true,
         ...state,
       }
+    case actions.FETCH_VEGETABLES_SUCCESS:
+      return {
+        isFetching: false
+      }
+    case actions.SET_VEGETABLES:
+      return {
+        vegetables: action.payload
+      }
     default:
       return state
   }
