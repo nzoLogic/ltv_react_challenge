@@ -11,9 +11,8 @@ const VegetableDataList = ({
   title,
   data = [],
   requesting = false,
-  fetchData,
 }) => {
-  const { vegetables } = useVegetable();
+  const { vegetables, fetchVegetablesData } = useVegetable();
   
   return (
     <div className="col text-center">
@@ -24,7 +23,7 @@ const VegetableDataList = ({
             type="button"
             className="btn btn-info"
             disabled={requesting}
-            onClick={fetchData}
+            onClick={fetchVegetablesData}
           >
             Fetch Data
           </button>
