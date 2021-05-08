@@ -11,6 +11,7 @@ import logger from 'redux-logger';
 
 import IndexReducer from './data/index-reducers';
 import RootSagas from './data/index-sagas';
+import { apiMiddleware, vegetableMiddleware } from './data/middleware';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -21,7 +22,7 @@ const composeSetup = process.env.NODE_ENV !== 'production' && typeof window === 
 
 const store = createStore(
   IndexReducer,
-  composeSetup(applyMiddleware(sagaMiddleware, logger)), // allows redux devtools to watch sagas
+  composeSetup(applyMiddleware(sagaMiddleware, apiMiddleware, vegetableMiddleware, logger)), // allows redux devtools to watch sagas
 );
 
 sagaMiddleware.run(RootSagas);
