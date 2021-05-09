@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import DataList from '../../components/DataList';
+import VegetableDataList from '../../components/VegetableDataList';
+
 import {
   AnimalsRequest,
 } from '../../data/animals/actions';
@@ -31,7 +33,7 @@ class Categories extends Component {
       <CategoriesContainer>
         <div className="row">
           <DataList {...Animals} title="1 - Animals" fetchData={fetchAnimals} />
-          <DataList title="2 - Vegetables"/>
+          <VegetableDataList />
         </div>
       </CategoriesContainer>
     );
