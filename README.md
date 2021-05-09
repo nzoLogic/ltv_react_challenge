@@ -1,44 +1,82 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
 
-## Available Scripts
+## Project Requirements
 
-In the project directory, you can run:
+This project requires using **node 14.16.0**
+* learn more about managing node versions using [NVM](https://github.com/nvm-sh/nvm)
 
-### `npm start`
 
-Runs the app in the development mode.<br />
+## Getting Started 
+
+1. Clone repo:  ` git clone https://github.com/nzoLogic/ltv_react_challenge.git `
+2. `npm install`
+3. `npm start`
+
+The app will run in development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
 
-### `npm test`
+## Challenge 1
+<hr></hr>
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Problem
+The `DataList` component was only trying to access the data property one layer deep. So this issue didn't really have anything to do with reconciliation.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The bug for this exercise was actually quite simple. In `animals/reducer.js` we returned the following object in our reducers:
+```
+Object.assign(state, {
+  animals: {
+    data: [],
+    // ...
+  }
+})
+````
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+And in `index-reducer.js` we use `combineReducers` with the name `animals` *(combineReducer takes the names passed to it as keys for our state tree)*
+which caused our state tree to look like:
+```
+{
+  Animals: {
+    animals: {
+      animals: {
+        data
+      }
+    }
+  }
+}
+````
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Solution
+Modify the reducer to simply return a plain object without a named 'animals' key.
+```
+{
+  data: [],
+  messages: []
+  ...
+}
+```
+## Challenge 2
+<hr></hr>
 
-### `npm run eject`
+### Problem
+Find another solution to managing side effects other than redux-saga.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Solution
+Use an event-driven approach and layered architecture towards creating separation of concerns between UI components, application state, and business logic. You can follow commits and comments on the PR [here](https://github.com/nzoLogic/ltv_react_challenge/pull/1).
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+I tackled this problem in the following:
+1. Use modern React/Redux which includes hooks
+2. Create an API feature that is abstract and reusable
+3. Add feature specific middleware *e.g. vegetablesMiddleware* for routing events.
+This keeps our application relatively lightweight by not depending on an additional external library while also introducing discipline into our application resulting in a more maintainable code base.
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+When you click Fetch Data for Vegetables, notice the events that are dispatched.
+```
+[Vegetables]: FETCH_VEGETABLES
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+// middleware! Our component and interactor knows nothing about these details
+[Vegetables]: API_REQUEST
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+// also managed by middle ware for dispatching appropriate document actions to update state
+[Vegetables]: API_SUCCESS
+```
