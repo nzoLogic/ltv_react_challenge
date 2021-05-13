@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import useVegetable from '../../data/vegetables/useVegetable';
+import useVegetable from '../../store/vegetables/useVegetable';
 
 const DataTable = styled.table`
   margin-top: 20px;
@@ -9,7 +9,7 @@ const DataTable = styled.table`
 
 const TableRow = (props) => (
   <tr>
-    <td>{props.children}</td>
+    <td>{ props.children }</td>
   </tr>
 )
 
@@ -30,8 +30,8 @@ const VegetableDataList = () => {
           <button
             type="button"
             className="btn btn-info"
-            disabled={isFetching}
-            onClick={fetchVegetablesData}
+            disabled={ isFetching }
+            onClick={ fetchVegetablesData }
           >
             Fetch Data
           </button>
@@ -52,8 +52,8 @@ const VegetableDataList = () => {
           {
             showIf(vegetables.length && !isFetching)(
               () => vegetables.map((item, i) => (
-                <tr key={Date.now() + i}>
-                  <td>{item}</td>
+                <tr key={ Date.now() + i }>
+                  <td>{ item }</td>
                 </tr>
               ))
             )
