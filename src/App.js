@@ -2,6 +2,7 @@ import React from 'react';
 
 import Header from './components/Header';
 import Categories from './containers/Categories';
+import VegetableDataList from './components/VegetableDataList';
 import 'bootstrap/dist/css/bootstrap.css';
 
 function App() {
@@ -9,7 +10,12 @@ function App() {
     <div className="App">
       <div className="container">
         <Header />
-        <Categories />
+        {/* 
+          Commented out since refactoring Categories and redux is out of scope
+          <Categories />
+          
+          */}
+        <VegetableDataList />
       </div>
     </div>
   );

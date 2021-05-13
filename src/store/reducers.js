@@ -7,4 +7,3 @@ export default combineReducers({
   animals,
   vegetable: vegetableReducer
 });
-

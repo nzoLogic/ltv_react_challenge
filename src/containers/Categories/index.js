@@ -8,7 +8,7 @@ import VegetableDataList from '../../components/VegetableDataList';
 
 import {
   AnimalsRequest,
-} from '../../data/animals/actions';
+} from '../../store/animals/actions';
 
 const CategoriesContainer = styled.div`
   margin-top: 20px;
@@ -32,7 +32,7 @@ class Categories extends Component {
     return (
       <CategoriesContainer>
         <div className="row">
-          <DataList {...Animals} title="1 - Animals" fetchData={fetchAnimals} />
+          <DataList { ...Animals } title="1 - Animals" fetchData={ fetchAnimals } />
           <VegetableDataList />
         </div>
       </CategoriesContainer>
