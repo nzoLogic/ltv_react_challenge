@@ -1,22 +1,12 @@
-import React from 'react';
-import { Provider } from 'react-redux';
-import { render, screen } from '@testing-library/react';
-import store from './store';
+import { screen } from '@testing-library/react';
+import { renderMockComponent } from './store/helpers';
+import App from './App';
 import '@testing-library/jest-dom/extend-expect';
 
-import App from './App';
-
 describe('App', () => {
-  function renderApp(props = {}) {
-    return render(
-      <Provider store={ store }>
-        <App { ...props } />
-      </Provider>
-    )
-  }
 
   test('render app', async () => {
-    renderApp()
+    renderMockComponent(App)
     screen.getByText('LTV Challenge')
   })
 })
